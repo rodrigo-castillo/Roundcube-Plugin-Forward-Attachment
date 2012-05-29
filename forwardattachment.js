@@ -37,6 +37,9 @@ function rcmail_forwardatt(prop) {
 function rcmail_forwardatt_init() {
 	var idx = -1;
 
+	if (!window.rcm_contextmenu_register_command)
+		return;
+
 	// check for browser support if Array.indexOf
 	if (Array.prototype.indexOf) {
 		idx = rcmail.contextmenu_disable_multi.indexOf('#forward-attachment');
@@ -48,7 +51,7 @@ function rcmail_forwardatt_init() {
 		}
 	}
 
-	if (window.rcm_contextmenu_register_command && idx != -1)
+	if (idx != -1)
 		delete rcmail.contextmenu_disable_multi[idx];
 }
 
