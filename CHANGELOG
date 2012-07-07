@@ -1,6 +1,10 @@
 Roundcube Webmail ForwardAttachment
 ===================================
 
+2012 07 07
+==========
+ * mark forwarded messages as forwarded
+
 2012 04 16
 ==========
  * rcube_ui > rcube_utils (r6091)

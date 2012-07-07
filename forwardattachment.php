@@ -29,11 +29,12 @@ class forwardattachment extends rcube_plugin
 		$COMPOSE_ID = uniqid(mt_rand());
 		$_SESSION['compose_data_' . $COMPOSE_ID] = array(
 			'id' => $COMPOSE_ID,
-			'mailbox' =>  $storage->get_folder(),
+			'mailbox' => $storage->get_folder(),
 		);
 		$COMPOSE =& $_SESSION['compose_data_' . $COMPOSE_ID];
 
 		if ($uids = rcube_utils::get_input_value('_uid', rcube_utils::INPUT_GPC)) {
+			$COMPOSE['forward_uid'] = $uids;
 			$uids = explode(",", $uids);
 			foreach ($uids as $key => $uid) {
 				$message = new rcube_message($uid);
