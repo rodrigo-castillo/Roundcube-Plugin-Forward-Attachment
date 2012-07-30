@@ -1,18 +1,14 @@
 Roundcube Webmail ForwardAttachment
 ===================================
 
-2012 07 07
-==========
- * mark forwarded messages as forwarded
-
-2012 04 16
-==========
  * rcube_ui > rcube_utils (r6091)
-
-2012 04 14
-==========
  * Update for Roundcube framework
 
-2012 01 21
-==========
+Version 2.2 (2012-07-07, rc-0.8)
+=================================================
+ * mark forwarded messages as forwarded
+ * Versoin ready for rc-0.8
+
+Version 2.1 (2012-01-21, rc-0.8)
+=================================================
  * Update after r5781
