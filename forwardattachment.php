@@ -15,14 +15,20 @@ class forwardattachment extends rcube_plugin
 
 	function init()
 	{
+		$rcmail = rcmail::get_instance();
+		if ($rcmail->task == 'mail' && ($rcmail->action == '' || $rcmail->action == 'show'))
+			$this->add_hook('render_mailboxlist', array($this, 'include_js'));
+
 		$this->register_action('plugin.forwardatt', array($this, 'attach_message'));
-		if (rcube::get_instance()->action == '')
-			$this->include_script('forwardattachment.js');
+	}
+
+	function include_js() {
+		$this->include_script("forwardattachment.js");
 	}
 
 	function attach_message()
 	{
-		$rcmail = rcube::get_instance();
+		$rcmail = rcmail::get_instance();
 		$storage = $rcmail->storage;
 		$temp_dir = $rcmail->config->get('temp_dir');
 
@@ -33,7 +39,7 @@ class forwardattachment extends rcube_plugin
 		);
 		$COMPOSE =& $_SESSION['compose_data_' . $COMPOSE_ID];
 
-		if ($uids = rcube_utils::get_input_value('_uid', rcube_utils::INPUT_GPC)) {
+		if ($uids = get_input_value('_uid', RCUBE_INPUT_GPC)) {
 			$COMPOSE['forward_uid'] = $uids;
 			$uids = explode(",", $uids);
 			foreach ($uids as $key => $uid) {
@@ -41,7 +47,6 @@ class forwardattachment extends rcube_plugin
 				$this->_rcmail_write_forward_attachment($message, $COMPOSE);
 			}
 		}
-
 		$COMPOSE['param']['sent_mbox'] = $rcmail->config->get('sent_mbox');
 		$rcmail->output->redirect(array('_action' => 'compose', '_id' => $COMPOSE['id']));
 		exit;
@@ -51,7 +56,7 @@ class forwardattachment extends rcube_plugin
 	// Copied from program/steps/mail/compose.inc
 	private function _rcmail_write_forward_attachment(&$message, &$COMPOSE)
 	{
-		$rcmail = rcube::get_instance();
+		$rcmail = rcmail::get_instance();
 
 		if (strlen($message->subject))
 			$name = mb_substr($message->subject, 0, 64) . '.eml';
